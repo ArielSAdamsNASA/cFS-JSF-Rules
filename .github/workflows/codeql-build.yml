@@ -62,7 +62,7 @@ jobs:
         uses: github/codeql-action/init@v1
         with:
           languages: c
-          config-file: ArielSAdamsNASA/cFS/.github/codeql/codeql-coding-standard.yml@Rule40
+          config-file: ArielSAdamsNASA/cFS/.github/codeql/codeql-coding-standard.yml@4.09-Style
 
       # Setup the build system
       - name: Copy sample_defs
