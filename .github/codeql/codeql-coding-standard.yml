@@ -4,4 +4,4 @@ disable-default-queries: true
 
 queries:
   - name: jsf Rules
-    uses: github/codeql/cpp/ql/src/jsf/4.07 Header Files/AV Rule 35.ql@main
+    uses: github/codeql/cpp/ql/src/jsf/4.07 Header Files/AV Rule 39.ql@main
