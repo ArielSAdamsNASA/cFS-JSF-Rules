@@ -4,4 +4,4 @@ disable-default-queries: true
 
 queries:
   - name: jsf Rules
-    uses: github/codeql/cpp/ql/src/jsf/4.22 Pointers and References/AV Rule 176.ql@main
+    uses: github/codeql/cpp/ql/src/jsf/4.23 Type Conversions/AV Rule 178.ql@main
