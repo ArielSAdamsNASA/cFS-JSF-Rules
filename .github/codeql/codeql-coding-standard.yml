@@ -4,4 +4,4 @@ disable-default-queries: true
 
 queries:
   - name: jsf Rules
-    uses: github/codeql/cpp/ql/src/jsf/4.20 Unions and Bit Fields/AV Rule 154.ql@main
+    uses: github/codeql/cpp/ql/src/jsf/4.20 Unions and Bit Fields/AV Rule 155.ql@main
