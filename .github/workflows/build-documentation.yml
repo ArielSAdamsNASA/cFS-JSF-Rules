@@ -133,6 +133,14 @@ jobs:
             exit -1
           fi
 
+  pdf-usersguide:  
+    # Name the Job
+    name: PDF Users Guide
+    # Set the type of machine to run on
+    runs-on: ubuntu-18.04
+
+    steps:
+    
       - name: PDF generation installs
         if: ${{ github.event_name == 'push' && contains(github.ref, 'main')}}
         run: |
@@ -158,7 +166,7 @@ jobs:
           FOLDER: deploy
           CLEAN: false
           SINGLE_COMMIT: true
-
+          
   build-osalguide:
     # Name the Job
     name: Osal Guide
@@ -222,7 +230,14 @@ jobs:
             cat osal-apiguide-warnings.log
             exit -1
           fi
+  
+  pdf-osalguide:  
+    # Name the Job
+    name: PDF Osal Guide
+    # Set the type of machine to run on
+    runs-on: ubuntu-18.04
 
+    steps:
       - name: PDF generation installs
         if: ${{ github.event_name == 'push' && contains(github.ref, 'main')}}
         run: |
