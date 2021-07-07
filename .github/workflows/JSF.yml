@@ -1,0 +1,63 @@
+name: "CodeQL JSF Analysis"
+
+on:
+  push:
+  pull_request:
+
+env:
+  SIMULATION: native
+  ENABLE_UNIT_TESTS: true
+  OMIT_DEPRECATED: true
+  BUILDTYPE: release
+
+jobs:
+  CodeQL-JSF-Build:
+    #Continue if check-for-duplicates found no duplicates. Always runs for pull-requests.
+    runs-on: ubuntu-18.04
+
+    steps:
+      # Checks out a copy of your repository
+      - name: Checkout code
+        if: ${{ !steps.skip-workflow.outputs.skip }}
+        uses: actions/checkout@v2
+        with:
+          repository: nasa/cFS
+          submodules: true
+
+      - name: Check versions
+        if: ${{ !steps.skip-workflow.outputs.skip }}
+        run: |
+           git log -1 --pretty=oneline
+           git submodule
+
+      - name: Checkout codeql code      
+        if: ${{ !steps.skip-workflow.outputs.skip }}
+        uses: actions/checkout@v2
+        with:
+          repository: github/codeql 
+          submodules: true 
+          path: codeql
+
+      - name: Initialize CodeQL
+        if: ${{ !steps.skip-workflow.outputs.skip }}
+        uses: github/codeql-action/init@v1
+        with:
+          languages: c
+          config-file: ArielSAdamsNASA/cFS/.github/codeql/codeql-coding-standard.yml@main
+
+      # Setup the build system
+      - name: Copy sample_defs
+        if: ${{ !steps.skip-workflow.outputs.skip }}
+        run: |
+          cp ./cfe/cmake/Makefile.sample Makefile
+          cp -r ./cfe/cmake/sample_defs sample_defs
+
+      # Setup the build system
+      - name: Make Install
+        if: ${{ !steps.skip-workflow.outputs.skip }}
+        run: make
+
+      # Run CodeQL
+      - name: Perform CodeQL Analysis
+        if: ${{ !steps.skip-workflow.outputs.skip }}
+        uses: github/codeql-action/analyze@v1
