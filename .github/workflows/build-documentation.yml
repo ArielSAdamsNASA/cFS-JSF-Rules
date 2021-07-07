@@ -72,39 +72,43 @@ jobs:
 
   build-usersguide:
     # Name the Job
-    needs: checks-for-duplicates
-    if: ${{ needs.checks-for-duplicates.outputs.should_skip != 'true' }}
     name: Users Guide
     # Set the type of machine to run on
     runs-on: ubuntu-18.04
 
     steps:
       # Checks out a copy of your repository on the ubuntu-latest machine
-      - name: Checkout code
+      - if: ${{ needs.checks-for-duplicates.outputs.should_skip != 'true' }}
+        name: Checkout code
         uses: actions/checkout@v2
         with:
           submodules: true
           persist-credentials: false
 
       # Setup the build system
-      - name: Copy Files
+      - if: ${{ needs.checks-for-duplicates.outputs.should_skip != 'true' }}
+        name: Copy Files
         run: |
           cp ./cfe/cmake/Makefile.sample Makefile
           cp -r ./cfe/cmake/sample_defs sample_defs
 
-      # Setup the build system
-      - name: Make Prep
+      # Setup the build system   
+      - if: ${{ needs.checks-for-duplicates.outputs.should_skip != 'true' }}
+        name: Make Prep
         run: make prep
 
-      - name: Install Dependencies
+      - if: ${{ needs.checks-for-duplicates.outputs.should_skip != 'true' }}
+        name: Install Dependencies
         run: sudo apt-get install doxygen graphviz -y
 
-      - name: Build Usersguide
+      - if: ${{ needs.checks-for-duplicates.outputs.should_skip != 'true' }}
+        name: Build Usersguide
         run: |
           make usersguide > make_usersguide_stdout.txt 2> make_usersguide_stderr.txt
           mv build/doc/warnings.log usersguide_warnings.log
 
-      - name: Archive Users Guide Build Logs
+      - if: ${{ needs.checks-for-duplicates.outputs.should_skip != 'true' }}
+        name: Archive Users Guide Build Logs
         uses: actions/upload-artifact@v2
         with:
           name: Users Guide Artifacts
@@ -113,15 +117,16 @@ jobs:
             make_usersguide_stderr.txt
             usersguide_warnings.log
 
-
-      - name: Error Check
+      - if: ${{ needs.checks-for-duplicates.outputs.should_skip != 'true' }}
+        name: Error Check
         run: |
           if [[ -s make_usersguide_stderr.txt ]]; then
             cat make_usersguide_stderr.txt
             exit -1
           fi
 
-      - name: Warning Check
+      - if: ${{ needs.checks-for-duplicates.outputs.should_skip != 'true' }}
+        name: Warning Check
         run: |
           if [[ -s usersguide_warnings.log ]]; then
             cat usersguide_warnings.log
@@ -130,40 +135,43 @@ jobs:
 
   build-osalguide:
     # Name the Job
-    needs: checks-for-duplicates
-    if: ${{ needs.checks-for-duplicates.outputs.should_skip != 'true' }}
     name: Osal Guide
     # Set the type of machine to run on
     runs-on: ubuntu-18.04
 
     steps:
       # Checks out a copy of your repository on the ubuntu-latest machine
-      - name: Checkout code
+      - if: ${{ needs.checks-for-duplicates.outputs.should_skip != 'true' }}
+        name: Checkout code
         uses: actions/checkout@v2
         with:
           submodules: true
           persist-credentials: false
 
       # Setup the build system
-      - name: Copy Files
+      - if: ${{ needs.checks-for-duplicates.outputs.should_skip != 'true' }}
+        name: Copy Files
         run: |
           cp ./cfe/cmake/Makefile.sample Makefile
           cp -r ./cfe/cmake/sample_defs sample_defs
 
-      # Setup the build system
-      - name: Make Prep
+      # Setup the build system 
+      - if: ${{ needs.checks-for-duplicates.outputs.should_skip != 'true' }}
+        name: Make Prep
         run: make prep
 
-      - name: Install Dependencies
+      - if: ${{ needs.checks-for-duplicates.outputs.should_skip != 'true' }}
+        name: Install Dependencies
         run: sudo apt-get install doxygen graphviz -y
 
-      - name: Build OSAL Guide
+      - if: ${{ needs.checks-for-duplicates.outputs.should_skip != 'true' }}
+        name: Build OSAL Guide
         run: |
           make osalguide > make_osalguide_stdout.txt 2> make_osalguide_stderr.txt
           mv build/doc/osalguide/osal-apiguide-warnings.log osal-apiguide-warnings.log
 
-
-      - name: Archive Osal Guide Build Logs
+      - if: ${{ needs.checks-for-duplicates.outputs.should_skip != 'true' }}
+        name: Archive Osal Guide Build Logs
         uses: actions/upload-artifact@v2
         with:
           name: OSAL Guide Artifacts
@@ -173,20 +181,22 @@ jobs:
             osal-apiguide-warnings.log
 
 
-      - name: Error Check
+      - if: ${{ needs.checks-for-duplicates.outputs.should_skip != 'true' }}
+        name: Error Check
         run: |
           if [[ -s make_osalguide_stderr.txt ]]; then
             cat make_osalguide_stderr.txt
             exit -1
           fi
 
-      - name: Warning Check
+      - if: ${{ needs.checks-for-duplicates.outputs.should_skip != 'true' }}
+        name: Warning Check
         run: |
           if [[ -s osal-apiguide-warnings.log ]]; then
             cat osal-apiguide-warnings.log
             exit -1
           fi
-  
+ 
   
   pdf-usersguide:  
     needs: build-usersguide
@@ -223,14 +233,11 @@ jobs:
           CLEAN: false
           SINGLE_COMMIT: true
           
-  
-  pdf-osalguide:    
-    needs: build-osalguide
+  pdf-osalguide:  
     # Name the Job
     name: PDF Osal Guide
     # Set the type of machine to run on
     runs-on: ubuntu-18.04
-
     steps:
       - name: PDF generation installs
         if: ${{ github.event_name == 'push' && contains(github.ref, 'main')}}
