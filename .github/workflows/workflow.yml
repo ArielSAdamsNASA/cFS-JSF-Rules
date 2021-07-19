@@ -4,11 +4,10 @@ name: "Workflow Test 1"
 on:
   workflow_run:
     workflows:
-      - Coverity
+      - "CodeQL Analysis"
     types:
       - completed
-    branches: 
-      - **
+    branches: ["**"]
 
 env:
   SIMULATION: native
