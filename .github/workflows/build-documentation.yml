@@ -125,23 +125,12 @@ jobs:
             cat cfe-usersguide-warnings.log
             exit -1
           fi
-
-  pdf-usersguide:  
-    needs: build-usersguide
-    # Name the Job
-    name: PDF Users Guide
-    # Set the type of machine to run on
-    runs-on: ubuntu-18.04
-
-    steps:
-    
+          
       - name: PDF generation installs
-        if: ${{ github.event_name == 'push' && contains(github.ref, 'main')}}
         run: |
           sudo apt-get install texlive-latex-base texlive-fonts-recommended texlive-fonts-extra texlive-latex-extra
 
       - name: PDF generation
-        if: ${{ github.event_name == 'push' && contains(github.ref, 'main')}}
         run: |
           set -x
           mkdir deploy
@@ -150,7 +139,15 @@ jobs:
           mv refman.pdf $GITHUB_WORKSPACE/deploy/cFE_Users_Guide.pdf
           # Could add pandoc and convert to github markdown
           # pandoc CFE_Users_Guide.pdf -t gfm
+          
+  deploy-usersguide:  
+    needs: build-usersguide
+    # Name the Job
+    name: PDF Users Guide
+    # Set the type of machine to run on
+    runs-on: ubuntu-18.04
 
+    steps:
       - name: Deploy
         if: ${{ github.event_name == 'push' && contains(github.ref, 'main')}}
         uses: JamesIves/github-pages-deploy-action@3.7.1
@@ -217,21 +214,12 @@ jobs:
             cat osal-apiguide-warnings.log
             exit -1
           fi
-
-  pdf-osalguide:    
-    needs: build-osalguide
-    # Name the Job
-    name: PDF Osal Guide
-    # Set the type of machine to run on
-    runs-on: ubuntu-18.04
-    steps:
+          
       - name: PDF generation installs
-        if: ${{ github.event_name == 'push' && contains(github.ref, 'main')}}
         run: |
           sudo apt-get install texlive-latex-base texlive-fonts-recommended texlive-fonts-extra texlive-latex-extra
 
       - name: PDF generation
-        if: ${{ github.event_name == 'push' && contains(github.ref, 'main')}}
         run: |
           mkdir deploy
           cd ./build/docs/osalguide/apiguide/latex
@@ -239,6 +227,14 @@ jobs:
           mv refman.pdf $GITHUB_WORKSPACE/deploy/OSAL_Users_Guide.pdf
           # Could add pandoc and convert to github markdown
           # pandoc CFE_Users_Guide.pdf -t gfm
+          
+  deploy-osalguide:    
+    needs: build-osalguide
+    # Name the Job
+    name: PDF Osal Guide
+    # Set the type of machine to run on
+    runs-on: ubuntu-18.04
+    steps:
 
       - name: Deploy
         if: ${{ github.event_name == 'push' && contains(github.ref, 'main')}}
