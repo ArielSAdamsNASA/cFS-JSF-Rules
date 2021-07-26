@@ -232,13 +232,6 @@ jobs:
             exit -1
           fi
 
-      - name: Cache cFS Build Environment for osalguide
-        id: cache-bundle
-        uses: actions/cache@v2
-        with:
-          path: /home/runner/work/${{ env.REPO_NAME }}/${{ env.REPO_NAME }}/build/*
-          key: osalguide-buildnum-${{ github.run_number }}
-
       - name: Install Dependencies
         if: ${{ github.event_name == 'push' && contains(github.ref, 'main')}}
         run: |
@@ -254,6 +247,13 @@ jobs:
           # Could add pandoc and convert to github markdown
           # pandoc CFE_Users_Guide.pdf -t gfm
 
+      - name: Cache cFS Build Environment for osalguide
+        id: cache-bundle
+        uses: actions/cache@v2
+        with:
+          path: /home/runner/work/${{ env.REPO_NAME }}/${{ env.REPO_NAME }}/build/*
+          key: osalguide-buildnum-${{ github.run_number }}
+  
   deploy-osalguide:
     needs: build-osalguide
     name: Deploy Osal Guide
