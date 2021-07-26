@@ -133,7 +133,7 @@ jobs:
         id: cache-bundle
         uses: actions/cache@v2
         with:
-          path: /home/runner/work/${{ env.REPO_NAME }}/${{ env.REPO_NAME }}/build/*
+          path: /home/runner/work/${{ env.REPO_NAME }}/${{ env.REPO_NAME }}/deploy/*
           key: usersguide-buildnum-${{ github.run_number }}
 
       - name: Install Dependencies
@@ -164,7 +164,7 @@ jobs:
         id: cache-bundle
         uses: actions/cache@v2
         with:
-          path: /home/runner/work/${{ env.REPO_NAME }}/${{ env.REPO_NAME }}/build/*
+          path: /home/runner/work/${{ env.REPO_NAME }}/${{ env.REPO_NAME }}/deploy/*
           key: usersguide-buildnum-${{ github.run_number }}
 
       - name: Deploy to GitHub
@@ -251,7 +251,7 @@ jobs:
         id: cache-bundle
         uses: actions/cache@v2
         with:
-          path: /home/runner/work/${{ env.REPO_NAME }}/${{ env.REPO_NAME }}/build/*
+          path: /home/runner/work/${{ env.REPO_NAME }}/${{ env.REPO_NAME }}/deploy/*
           key: osalguide-buildnum-${{ github.run_number }}
   
   deploy-osalguide:
