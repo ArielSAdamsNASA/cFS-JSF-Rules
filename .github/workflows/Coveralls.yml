@@ -7,47 +7,12 @@ env:
   OMIT_DEPRECATED: false
   
 jobs:
-  build-cfs:
-    name: Build
-    runs-on: ubuntu-18.04
-
-    strategy:
-      fail-fast: false
-      matrix:
-        buildtype: [debug, release]
-
-    # Set the type of machine to run on
-    env:
-      BUILDTYPE: ${{ matrix.buildtype }}
-
-    steps:
-      # Checks out a copy of your repository on the ubuntu-latest machine
-      - name: Checkout code
-        uses: actions/checkout@v2
-        with:
-          submodules: true
-
-      # Setup the build system
-      - name: Copy Files
-        run: |
-          cp ./cfe/cmake/Makefile.sample Makefile
-          cp -r ./cfe/cmake/sample_defs sample_defs
-      # Setup the build system
-      - name: Make Prep
-        run: make prep
-
-      - name: Make
-        run: make
-        
   test-cfs:
     name: Test
-    needs: build-cfs
     runs-on: ubuntu-18.04
 
     strategy:
       fail-fast: false
-      matrix:
-        buildtype: [debug, release]
 
     # Set the type of machine to run on
     env:
@@ -80,7 +45,13 @@ jobs:
       - name: Check Coverage
         run: make lcov
         
-      - name: Coveralls
-        uses: coverallsapp/github-action@master
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+  finish:
+    needs: test-cfs
+    runs-on: ubuntu-latest
+    steps:
+    - name: Coveralls Finished
+      uses: coverallsapp/github-action@master
+      with:
+        github-token: ${{ secrets.github_token }}
+        parallel-finished: true
+        path-to-lcov: build/native/default_cpu1/coverage_base.info
