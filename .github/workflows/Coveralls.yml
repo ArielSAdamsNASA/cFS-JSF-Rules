@@ -1,0 +1,40 @@
+on: ["push", "pull_request"]
+
+name: Test Coveralls
+
+jobs:
+
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      # Checks out a copy of your repository
+    - name: Checkout code
+      if: ${{ !steps.skip-workflow.outputs.skip }}
+      uses: actions/checkout@v2
+      with:
+        repository: nasa/cFS
+        submodules: true
+
+    - name: Check versions
+      if: ${{ !steps.skip-workflow.outputs.skip }}
+      run: |
+         git log -1 --pretty=oneline
+         git submodule
+         
+    # Setup the build system
+    - name: Copy sample_defs
+      if: ${{ !steps.skip-workflow.outputs.skip }}
+      run: |
+        cp ./cfe/cmake/Makefile.sample Makefile
+        cp -r ./cfe/cmake/sample_defs sample_defs
+        
+    # Setup the build system
+    - name: Make Install
+      if: ${{ !steps.skip-workflow.outputs.skip }}
+      run: make
+
+    - name: Coveralls
+      uses: coverallsapp/github-action@master
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
