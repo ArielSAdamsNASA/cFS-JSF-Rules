@@ -2,6 +2,10 @@ on: ["push", "pull_request"]
 
 name: Test Coveralls
 
+env:
+  SIMULATION: native
+  OMIT_DEPRECATED: false
+  
 jobs:
   build-cfs:
     name: Build
