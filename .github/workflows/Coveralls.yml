@@ -8,7 +8,10 @@ jobs:
     name: Build
     runs-on: ubuntu-latest
     steps:
-      # Checks out a copy of your repository
+    - name: Install Dependencies
+      run: sudo apt-get install lcov -y    
+  
+    # Checks out a copy of your repository
     - name: Checkout code
       uses: actions/checkout@v2
       with:
