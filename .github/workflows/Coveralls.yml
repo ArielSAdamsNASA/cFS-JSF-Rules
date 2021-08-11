@@ -7,6 +7,12 @@ jobs:
   coveralls:
     name: Coveralls
     runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        buildtype: [debug, release]
+        
     steps:
     - name: Install Dependencies
       run: sudo apt-get install lcov -y    
