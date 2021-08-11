@@ -45,13 +45,8 @@ jobs:
       - name: Check Coverage
         run: make lcov
         
-  finish:
-    needs: test-cfs
-    runs-on: ubuntu-latest
-    steps:
-    - name: Coveralls Finished
-      uses: coverallsapp/github-action@master
-      with:
-        github-token: ${{ secrets.github_token }}
-        parallel-finished: true
-        path-to-lcov: build/native/default_cpu1/coverage_base.info
+      - name: Coveralls Finished
+        uses: coverallsapp/github-action@master
+        with:
+          github-token: ${{ secrets.github_token }}
+          path-to-lcov: build/native/default_cpu1/coverage_base.info
