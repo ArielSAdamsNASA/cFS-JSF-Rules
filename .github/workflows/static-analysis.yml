@@ -57,8 +57,6 @@ jobs:
       - name: Run bundle cppcheck
         if: ${{matrix.cppcheck =='bundle'}}
         run: |
-          ls
-          cd cppcheck/addons/test
           cppcheck --dump main.cpp
           cppcheck --force --inline-suppr --quiet . 2> ${{matrix.cppcheck}}_cppcheck_err.txt
           python3 misra.py main.cpp.dump
@@ -69,8 +67,6 @@ jobs:
         run: |
           cd ${{matrix.cppcheck}}
           cppcheck --force --inline-suppr --std=c99 --language=c --enable=warning,performance,portability,style --suppress=variableScope --inconclusive ./modules/core_api/fsw ./modules/core_private/fsw ./modules/es/fsw ./modules/evs/fsw ./modules/fs/fsw ./modules/msg/fsw ./modules/resourceid/fsw ./modules/sb/fsw ./modules/sbr/fsw ./modules/tbl/fsw ./modules/time/fsw -UCFE_PLATFORM_TIME_CFG_CLIENT -DCFE_PLATFORM_TIME_CFG_SERVER 2> ../${{matrix.cppcheck}}_cppcheck_err.txt
-          cd ../../
-          ls
           python3 misra.py main.cpp.dump
           
       - name: osal strict cppcheck
@@ -78,8 +74,6 @@ jobs:
         run: |
           cd ${{matrix.cppcheck}}
           cppcheck --force --inline-suppr --std=c99 --language=c --enable=warning,performance,portability,style --suppress=variableScope --inconclusive ./src/bsp ./src/os 2> ../${{matrix.cppcheck}}_cppcheck_err.txt
-          cd ../../../
-          ls
           python3 misra.py main.cpp.dump
           
       - name: psp strict cppcheck
@@ -87,7 +81,8 @@ jobs:
         run: |
           cd ${{matrix.cppcheck}}
           cppcheck --force --inline-suppr --std=c99 --language=c --enable=warning,performance,portability,style --suppress=variableScope --inconclusive ./fsw 2> ../${{matrix.cppcheck}}_cppcheck_err.txt
-     
+          python3 misra.py main.cpp.dump
+          
       - name: Archive Static Analysis Artifacts
         uses: actions/upload-artifact@v2
         with:
