@@ -60,7 +60,7 @@ jobs:
         if: ${{matrix.cppcheck =='bundle'}}
         run: |
           cppcheck --force --inline-suppr --quiet . 2> ${{matrix.cppcheck}}_cppcheck_err.txt
-          cppcheck --dump --quiet misra-test.c
+          cppcheck --dump --quiet misra-test.c --force --inline-suppr --quiet . 2> ${{matrix.cppcheck}}_cppcheck_err.txt
           python3 misra.py misra-test.c.dump
           
         # Run strict static analysis for embedded portions of cfe, osal, and psp
