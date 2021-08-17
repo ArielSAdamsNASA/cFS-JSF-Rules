@@ -37,7 +37,13 @@ jobs:
     steps:      
       - name: Install cppcheck
         run: sudo apt-get install cppcheck -y
-        
+          
+        # Checks out a copy of the cfs bundle
+      - name: Checkout code
+        uses: actions/checkout@v2
+        with:
+          submodules: true
+
       - name: get MISRA addon
         run: | 
             sudo apt-get install git -y
@@ -46,15 +52,7 @@ jobs:
             cp cppcheck/addons/cppcheck.py cppcheck.py
             cp cppcheck/addons/cppcheckdata.py cppcheckdata.py
             cp cppcheck/addons/misra_9.py misra_9.py
-            cd ../
-            ls
-          
-        # Checks out a copy of the cfs bundle
-      - name: Checkout code
-        uses: actions/checkout@v2
-        with:
-          submodules: true
-
+            
         # run normal cpp check and then MISRA addon
       - name: Run bundle cppcheck
         if: ${{matrix.cppcheck =='bundle'}}
