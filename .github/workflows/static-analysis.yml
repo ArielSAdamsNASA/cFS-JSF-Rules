@@ -59,7 +59,6 @@ jobs:
       - name: Run bundle cppcheck
         if: ${{matrix.cppcheck =='bundle'}}
         run: |
-          cppcheck --force --inline-suppr --quiet . 2> ${{matrix.cppcheck}}_cppcheck_err.txt
           cppcheck --dump misra-test.h --std=c89
           cppcheck --dump -DDUMMY --suppress=uninitvar --inline-suppr misra-test.c --std=c89 --platform=unix64
           python3 misra.py -verify misra-test.c.dump
