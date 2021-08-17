@@ -58,7 +58,7 @@ jobs:
       - name: Run bundle cppcheck
         if: ${{matrix.cppcheck =='bundle'}}
         run: |
-          ccppcheck --dump misra-test.c
+          cppcheck --dump misra-test.c
           python3 misra.py --rule-texts=misra-rules.txt misra-test.c.dump
           
         # Run strict static analysis for embedded portions of cfe, osal, and psp
