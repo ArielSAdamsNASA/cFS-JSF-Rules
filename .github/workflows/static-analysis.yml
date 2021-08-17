@@ -53,16 +53,16 @@ jobs:
             cp cppcheck/addons/cppcheckdata.py cppcheckdata.py
             cp cppcheck/addons/misra_9.py misra_9.py
             cp cppcheck/addons/test/misra/misra-test.h misra-test.h
-            cp cppcheck/addons/test/misra/misra-test.cpp misra-test.cpp
+            cp cppcheck/addons/test/misra/misra-test.c misra-test.c
             
         # run normal cpp check and then MISRA addon
       - name: Run bundle cppcheck
         if: ${{matrix.cppcheck =='bundle'}}
         run: |
           cppcheck --force --inline-suppr --quiet . 2> ${{matrix.cppcheck}}_cppcheck_err.txt
-          cppcheck --dump misra/misra-test.h --std=c89
-          cppcheck --dump -DDUMMY --suppress=uninitvar --inline-suppr misra/misra-test.c --std=c89 --platform=unix64 && python3 ../misra.py -verify misra/misra-test.c.dump
-
+          cppcheck --dump misra-test.h --std=c89
+          cppcheck --dump -DDUMMY --suppress=uninitvar --inline-suppr misra-test.c --std=c89 --platform=unix64
+          python3 misra.py -verify misra-test.c.dump
           
         # Run strict static analysis for embedded portions of cfe, osal, and psp
       - name: cfe strict cppcheck
