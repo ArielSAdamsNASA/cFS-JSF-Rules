@@ -52,15 +52,24 @@ jobs:
             cp cppcheck/addons/cppcheck.py cppcheck.py
             cp cppcheck/addons/cppcheckdata.py cppcheckdata.py
             cp cppcheck/addons/misra_9.py misra_9.py
-            cp cppcheck/oss-fuzz/main.cpp main.cpp
+            cp cppcheck/addons/misra/misra-test.c misra-test.c
+            cp cppcheck/addons/misra/misra-test.cpp misra-test.cpp
             
         # run normal cpp check and then MISRA addon
       - name: Run bundle cppcheck
         if: ${{matrix.cppcheck =='bundle'}}
         run: |
-          cppcheck --dump main.cpp
           cppcheck --force --inline-suppr --quiet . 2> ${{matrix.cppcheck}}_cppcheck_err.txt
-          python3 misra.py main.cpp.dump
+          cppcheck --dump misra-test.c
+          python3 misra.py -verify misra-test.c.dump
+          cppcheck --dump misra-test.cpp
+          python3 misra.py -verify misra-test.cpp.dump
+          python misra.py --rule-texts=misra2012_rules_dummy_ascii.txt -verify misra-test.cpp.dump
+          python3 misra.py --rule-texts=misra2012_rules_dummy_ascii.txt -verify misra-test.cpp.dump
+          python misra.py --rule-texts=misra2012_rules_dummy_utf8.txt -verify misra-test.cpp.dump
+          python3 misra.py --rule-texts=misra2012_rules_dummy_utf8.txt -verify misra-test.cpp.dump
+          python misra.py --rule-texts=misra2012_rules_dummy_windows1250.txt -verify misra-test.cpp.dump
+          python3 misra.py --rule-texts=misra2012_rules_dummy_windows1250.txt -verify misra-test.cpp.dump
           
         # Run strict static analysis for embedded portions of cfe, osal, and psp
       - name: cfe strict cppcheck
