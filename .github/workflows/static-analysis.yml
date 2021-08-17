@@ -61,7 +61,8 @@ jobs:
         run: |
           cppcheck --dump misra-test.h --std=c89
           cppcheck --dump -DDUMMY --suppress=uninitvar --inline-suppr misra-test.c --std=c89 --platform=unix64
-          python3 misra.py -verify misra-test.c.dump
+          python3 misra.py -verify --rule-texts=github/workflows/misra2012.txt misra-test.c.dump
+          ls
           
         # Run strict static analysis for embedded portions of cfe, osal, and psp
       - name: cfe strict cppcheck
