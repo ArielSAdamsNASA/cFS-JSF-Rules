@@ -70,11 +70,11 @@ jobs:
         run: |
           cd ${{matrix.cppcheck}}
           cppcheck --force --inline-suppr --std=c99 --language=c --enable=warning,performance,portability,style --suppress=variableScope --inconclusive ./modules/core_api/fsw ./modules/core_private/fsw ./modules/es/fsw ./modules/evs/fsw ./modules/fs/fsw ./modules/msg/fsw ./modules/resourceid/fsw ./modules/sb/fsw ./modules/sbr/fsw ./modules/tbl/fsw ./modules/time/fsw -UCFE_PLATFORM_TIME_CFG_CLIENT -DCFE_PLATFORM_TIME_CFG_SERVER 2> ../${{matrix.cppcheck}}_cppcheck_err.txt
-          cppcheck --dump ../misra-test.c
-          python3 ../misra.py -verify ../misra-test.c.dump
-          cppcheck --dump ../misra-test.cpp 
-          python3 ../misra.py -verify ../misra-test.cpp.dump
-          python3 ../misra.py --rule-texts=../misra2012_rules_dummy_ascii.txt -verify ../misra-test.cpp.dump
+          cd ../
+          ls
+          cppcheck --dump misra-test.h --std=c89
+          cppcheck --dump -DDUMMY --suppress=uninitvar --inline-suppr misra-test.c --std=c89 --platform=unix64
+          python3 misra.py --rule-texts=../github/workflows/misra-rules.txt -verify misra-test.c.dump
           
       - name: osal strict cppcheck
         if: ${{matrix.cppcheck =='osal'}}
