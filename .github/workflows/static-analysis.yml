@@ -47,7 +47,7 @@ jobs:
       - name: get MISRA addon
         run: | 
             sudo apt-get install git -y
-            git clone https://github.com/danmar/cppcheck.git
+            git clone https://github.com/danmar/cppcheck.git --branch 2.5
             cp cppcheck/addons/misra.py misra.py
             cp cppcheck/addons/cppcheck.py cppcheck.py
             cp cppcheck/addons/cppcheckdata.py cppcheckdata.py
