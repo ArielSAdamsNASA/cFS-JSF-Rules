@@ -107,6 +107,9 @@ jobs:
         run: |
             sudo apt-get install git -y
             git clone https://github.com/danmar/cppcheck.git
+            cp cppcheck/addons/misra.py misra.py
+            cp cppcheck/addons/cppcheckdata.py cppcheckdata.py
+            cp cppcheck/addons/misra_9.py misra_9.py
 
         # run normal cpp check and then MISRA addon
       - name: Run bundle cppcheck
