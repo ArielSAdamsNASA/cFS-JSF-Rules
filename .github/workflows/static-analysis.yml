@@ -44,43 +44,32 @@ jobs:
 
       - name: get MISRA addon
         run: |
-            sudo apt-get install git -y
-            git clone https://github.com/danmar/cppcheck.git
-            cp cppcheck/addons/misra.py misra.py
-            cp cppcheck/addons/test/misra/misra-test.h misra-test.h
-            cp cppcheck/addons/test/misra/misra-test.c misra-test.c
-            cp cppcheck/addons/cppcheckdata.py cppcheckdata.py
-            cp cppcheck/addons/misra_9.py misra_9.py
             wget https://raw.githubusercontent.com/ArielSAdamsNASA/cFS-JSF-Rules/Test-MISRA-Addons/.github/cppcheck/misra-rules.txt
 
         # run normal cpp check and then MISRA addon
       - name: Run bundle cppcheck
         if: ${{matrix.cppcheck =='bundle'}}
         run: |
-          cppcheck --addon=misra --force --inline-suppr --quiet . 2> ${{matrix.cppcheck}}_cppcheck_err.txt
+          cppcheck --addon=misra --rule-texts=misra_rules.txt --force --inline-suppr --quiet . 2> ${{matrix.cppcheck}}_cppcheck_err.txt
 
         # Run strict static analysis for embedded portions of cfe, osal, and psp
       - name: cfe strict cppcheck
         if: ${{matrix.cppcheck =='cfe'}}
         run: |
           cd ${{matrix.cppcheck}}
-          cppcheck --addon=misra --force --inline-suppr --std=c99 --language=c --enable=warning,performance,portability,style --suppress=variableScope --inconclusive ./modules/core_api/fsw ./modules/core_private/fsw ./modules/es/fsw ./modules/evs/fsw ./modules/fs/fsw ./modules/msg/fsw ./modules/resourceid/fsw ./modules/sb/fsw ./modules/sbr/fsw ./modules/tbl/fsw ./modules/time/fsw -UCFE_PLATFORM_TIME_CFG_CLIENT -DCFE_PLATFORM_TIME_CFG_SERVER 2> ../${{matrix.cppcheck}}_cppcheck_err.txt
+          cppcheck --addon=misra --rule-texts=../misra_rules.txt --force --inline-suppr --std=c99 --language=c --enable=warning,performance,portability,style --suppress=variableScope --inconclusive ./modules/core_api/fsw ./modules/core_private/fsw ./modules/es/fsw ./modules/evs/fsw ./modules/fs/fsw ./modules/msg/fsw ./modules/resourceid/fsw ./modules/sb/fsw ./modules/sbr/fsw ./modules/tbl/fsw ./modules/time/fsw -UCFE_PLATFORM_TIME_CFG_CLIENT -DCFE_PLATFORM_TIME_CFG_SERVER 2> ../${{matrix.cppcheck}}_cppcheck_err.txt
 
       - name: osal strict cppcheck
         if: ${{matrix.cppcheck =='osal'}}
         run: |
           cd ${{matrix.cppcheck}}
-          cppcheck --force --inline-suppr --std=c99 --language=c --enable=warning,performance,portability,style --suppress=variableScope --inconclusive ./src/bsp ./src/os 2> ../${{matrix.cppcheck}}_cppcheck_err.txt
-          cppcheck --dump ../misra-test.c
-          python3 ../misra.py --rule-texts=../misra-rules.txt ../misra-test.c.dump
+          cppcheck --addon=misra --rule-texts=../misra_rules.txt --force --inline-suppr --std=c99 --language=c --enable=warning,performance,portability,style --suppress=variableScope --inconclusive ./src/bsp ./src/os 2> ../${{matrix.cppcheck}}_cppcheck_err.txt
 
       - name: psp strict cppcheck
         if: ${{matrix.cppcheck =='psp'}}
         run: |
           cd ${{matrix.cppcheck}}
-          cppcheck --force --inline-suppr --std=c99 --language=c --enable=warning,performance,portability,style --suppress=variableScope --inconclusive ./fsw 2> ../${{matrix.cppcheck}}_cppcheck_err.txt
-          cppcheck --dump ../misra-test.c
-          python3 ../misra.py --rule-texts=../misra-rules.txt ../misra-test.c.dump
+          cppcheck --addon=misra --rule-texts=../misra_rules.txt --force --inline-suppr --std=c99 --language=c --enable=warning,performance,portability,style --suppress=variableScope --inconclusive ./fsw 2> ../${{matrix.cppcheck}}_cppcheck_err.txt
 
       - name: Archive Static Analysis Artifacts
         uses: actions/upload-artifact@v2
