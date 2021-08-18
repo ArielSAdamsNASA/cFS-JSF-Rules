@@ -8,7 +8,7 @@ on:
 jobs:
   #Checks for duplicate actions. Skips push actions if there is a matching or duplicate pull-request action.
   check-for-duplicates:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-18.02
     # Map a step output to a job output
     outputs:
         should_skip: ${{ steps.skip_check.outputs.should_skip }}
@@ -106,16 +106,13 @@ jobs:
             sudo apt-get install git -y
             git clone https://github.com/danmar/cppcheck.git
             cp cppcheck/addons/misra.py misra.py
-            cp cppcheck/addons/test/misra/misra-test.h misra-test.h
-            cp cppcheck/addons/test/misra/misra-test.c misra-test.c
             cp cppcheck/addons/cppcheckdata.py cppcheckdata.py
             cp cppcheck/addons/misra_9.py misra_9.py
-            wget https://raw.githubusercontent.com/ArielSAdamsNASA/cFS-JSF-Rules/Test-MISRA-Addons/.github/cppcheck/misra-rules.txt
   
       - name: Run bundle cppcheck
         if: ${{matrix.cppcheck =='bundle'}}
         run: |
-          cppcheck --addon=misra --rule-texts=misra-rules.txt --force --inline-suppr --quiet . 2> ${{matrix.cppcheck}}_cppcheck_err.txt
+          cppcheck --addon=misra --force --inline-suppr --quiet . 2> ${{matrix.cppcheck}}_cppcheck_err.txt
           
         # Run strict static analysis for embedded portions of cfe, osal, and psp
       - name: cfe strict cppcheck
