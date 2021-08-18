@@ -102,10 +102,11 @@ jobs:
         uses: actions/checkout@v2
         with:
           submodules: true
-
+          
       - name: get MISRA addon
         run: |
-            wget https://raw.githubusercontent.com/ArielSAdamsNASA/cFS-JSF-Rules/Test-MISRA-Addons/.github/cppcheck/misra-rules.txt
+            sudo apt-get install git -y
+            git clone https://github.com/danmar/cppcheck.git
 
         # run normal cpp check and then MISRA addon
       - name: Run bundle cppcheck
