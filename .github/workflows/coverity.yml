@@ -74,7 +74,7 @@ jobs:
         run: make prep
 
       - name: Make
-        run: make
+        run: cov-build --dir cov-int make
           
       - name: Submit results to Coverity Scan
         env:
