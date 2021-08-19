@@ -56,11 +56,19 @@ jobs:
         run: |
           sudo apt-get -y update
           sudo apt-get -y install pkg-config libsystemd-dev libcap-dev
-          
-      - name: Build
+     
+     # Setup the build system
+      - name: Copy Files
         run: |
-          export PATH=`pwd`/coverity/bin:$PATH
-          cov-build --dir cov-int make
+          cp ./cfe/cmake/Makefile.sample Makefile
+          cp -r ./cfe/cmake/sample_defs sample_defs
+      
+      # Setup the build system
+      - name: Make Prep
+        run: make prep
+
+      - name: Make
+        run: make
           
       - name: Submit results to Coverity Scan
         env:
