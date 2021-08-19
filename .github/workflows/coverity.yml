@@ -57,11 +57,6 @@ jobs:
           sudo apt-get -y update
           sudo apt-get -y install pkg-config libsystemd-dev libcap-dev
           
-      - name: Configure
-        run: |
-          ./autogen.sh
-          ./configure --prefix= --enable-examples
-          
       - name: Build
         run: |
           export PATH=`pwd`/coverity/bin:$PATH
