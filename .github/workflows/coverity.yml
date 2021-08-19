@@ -56,7 +56,13 @@ jobs:
         run: |
           sudo apt-get -y update
           sudo apt-get -y install pkg-config libsystemd-dev libcap-dev
-     
+          
+       # Check out the cfs bundle
+      - name: Checkout code
+        uses: actions/checkout@v2
+        with:
+          submodules: true
+          
      # Setup the build system
       - name: Copy Files
         run: |
