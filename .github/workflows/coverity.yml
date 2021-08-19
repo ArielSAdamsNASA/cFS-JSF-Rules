@@ -2,6 +2,7 @@ name: Coverity Scan
 
 on:
   push:
+  pull_request:
 
 env:
   PROJECT_NAME: cFS-JSF-Rules
