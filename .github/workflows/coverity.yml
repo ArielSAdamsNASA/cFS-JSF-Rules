@@ -81,7 +81,7 @@ jobs:
             --form version=trunk \
             --form description="${PROJECT_NAME} $(git rev-parse HEAD)" \
             https://scan.coverity.com/builds?project=${COVERITY_PROJ}
-            
+
       - name: Upload build.log
         uses: actions/upload-artifact@v2
         with:
