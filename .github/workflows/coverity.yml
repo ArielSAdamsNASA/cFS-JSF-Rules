@@ -80,11 +80,11 @@ jobs:
       # Setup the build system
       - name: ls
         run: | 
-          cd coverity
+          cd coverity/bin
           ls
         
       - name: Make
-        run: coverity/cov-build --dir cov-int make
+        run: ./coverity/bin/cov-build --dir cov-int make
           
       - name: Submit results to Coverity Scan
         env:
