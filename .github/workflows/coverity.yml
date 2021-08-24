@@ -51,7 +51,11 @@ jobs:
           fi
           mkdir coverity
           tar xzf coverity-latest.tar.gz --strip 1 -C coverity
-          
+  
+      # Setup the build system
+      - name: ls1
+        run: ls   
+        
       - name: Install dependencies
         run: |
           sudo apt-get -y update
@@ -73,6 +77,10 @@ jobs:
       - name: Make Prep
         run: make prep
 
+      # Setup the build system
+      - name: ls
+        run: ls
+        
       - name: Make
         run: cov-build --dir cov-int make
           
