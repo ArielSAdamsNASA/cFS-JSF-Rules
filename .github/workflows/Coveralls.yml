@@ -5,6 +5,7 @@ name: Test Coveralls
 env:
   SIMULATION: native
   OMIT_DEPRECATED: false
+  ENABLE_UNIT_TESTS: true
   
 jobs:
   test-cfs:
