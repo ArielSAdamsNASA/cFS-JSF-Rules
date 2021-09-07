@@ -24,6 +24,32 @@ jobs:
           skip_after_successful_duplicate: 'true'
           do_not_skip: '["pull_request", "workflow_dispatch", "schedule"]'
           
+  prep-env:
+    name: Prepare Environment
+    runs-on: ubuntu-18.04
+
+    steps:
+      - name: Cache Source and proto-build
+        id: cache-src-proto-bld
+        uses: actions/cache@v2
+        with:
+          path: |
+            /home/runner/work/cfs-jsf-rules/*
+          key: proto-build-${{ github.run_number }}
+
+      - name: Checkout OSAL
+        if: steps.cache-src-proto-bld.outputs.cache-hit != 'true'
+        uses: actions/checkout@v2
+
+      - name: Copy Makefile
+        run: cp osal/Makefile.sample Makefile
+        working-directory: /home/runner/work/cfs-jsf-rules
+
+      - name: Prep Build
+        run: |
+          make prep O=/home/runner/work/cfs-jsf-rules/build
+        working-directory: /home/runner/work/cfs-jsf-rules
+        
   build-cfs:
     #Continue if check-for-duplicates found no duplicates. Always runs for pull-requests.
     needs: check-for-duplicates
@@ -41,30 +67,23 @@ jobs:
       BUILDTYPE: ${{ matrix.buildtype }}
 
     steps:
-      # Check out the cfs bundle
-      - name: Checkout code
-        uses: actions/checkout@v2
+      - name: Cache Source and proto-build
+        id: cache-src-proto-bld
+        uses: actions/cache@v2
         with:
-          submodules: true
+          path: |
+            /home/runner/work/cfs-jsf-rules/*
+          key: proto-build-${{ github.run_number }}
 
-      # Setup the build system
-      - name: Copy Files
-        run: |
-          cp ./cfe/cmake/Makefile.sample Makefile
-          cp -r ./cfe/cmake/sample_defs sample_defs
-
-      # Setup the build system
-      - name: Make Prep
-        run: make prep
-
+      - name: Cache built binary
+        uses: actions/cache@v2
+        with:
+          key: bin-build-${{ github.run_number }}
+          
       - name: Make
         run: make
-        
-      - name: Download build
-        uses: actions/upload-artifact@v2
-        with:
-          name: build
-          
+        working-directory: /home/runner/work/osal/
+
   test-cfs:
     name: Test
     runs-on: ubuntu-18.04
@@ -92,11 +111,16 @@ jobs:
         with:
           submodules: true
 
-      - name: Download build
-        uses: actions/download-artifact@v2
-        with:
-          name: build
-          
+      # Setup the build system
+      - name: Copy Files
+        run: |
+          cp ./cfe/cmake/Makefile.sample Makefile
+          cp -r ./cfe/cmake/sample_defs sample_defs
+
+      # Setup the build system
+      - name: Make
+        run: make
+
       - name: Run Tests
         run: make test
 
