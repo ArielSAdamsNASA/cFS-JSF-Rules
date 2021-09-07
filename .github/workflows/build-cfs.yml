@@ -40,11 +40,17 @@ jobs:
       - name: Checkout cFS
         if: steps.cache-src-proto-bld.outputs.cache-hit != 'true'
         uses: actions/checkout@v2
-
       - name: Copy Makefile
         run: |
-          cp cfs-jsf-rules/cfe/cmake/Makefile.sample Makefile
-          cp -r cfs-jsf-rules/cfe/cmake/sample_defs sample_defs
+          ls
+      - name: Copy Makefile
+        run: |
+          cd cfs-jsf-rules
+          ls
+      - name: Copy Makefile
+        run: |
+          cp cfs-jsf-rules/cfs/cfe/cmake/Makefile.sample Makefile
+          cp -r cfs-jsf-rules/cfs/cfe/cmake/sample_defs sample_defs
         working-directory: /home/runner/work/cfs-jsf-rules
 
       - name: Prep Build
