@@ -37,22 +37,24 @@ jobs:
             /home/runner/work/cfs-jsf-rules/*
           key: proto-build-${{ github.run_number }}
 
-      - name: Checkout OSAL
+      - name: Checkout cFS
         if: steps.cache-src-proto-bld.outputs.cache-hit != 'true'
         uses: actions/checkout@v2
 
       - name: Copy Makefile
-        run: cp osal/Makefile.sample Makefile
+        run: |
+          cp ./cfe/cmake/Makefile.sample Makefile
+          cp -r ./cfe/cmake/sample_defs sample_defs
         working-directory: /home/runner/work/cfs-jsf-rules
 
       - name: Prep Build
         run: |
-          make prep O=/home/runner/work/cfs-jsf-rules/build
+          make prep
         working-directory: /home/runner/work/cfs-jsf-rules
         
   build-cfs:
     #Continue if check-for-duplicates found no duplicates. Always runs for pull-requests.
-    needs: check-for-duplicates
+    needs: prep-env
     if: ${{ needs.check-for-duplicates.outputs.should_skip != 'true' }}
     name: Build
     runs-on: ubuntu-18.04
