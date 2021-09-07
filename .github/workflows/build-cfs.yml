@@ -40,6 +40,9 @@ jobs:
       - name: Checkout cFS
         if: steps.cache-src-proto-bld.outputs.cache-hit != 'true'
         uses: actions/checkout@v2
+        with:
+          submodules: true
+          
       - name: Copy Makefile
         run: |
           ls
