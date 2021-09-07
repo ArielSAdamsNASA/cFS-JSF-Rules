@@ -42,7 +42,10 @@ jobs:
         uses: actions/checkout@v2
         with:
           submodules: true
-          
+      - name: Copy Makefile
+        run: |
+          cd cfe/cmake
+          ls
       - name: Copy Makefile
         run: |
           cp cfe/cmake/Makefile.sample Makefile
