@@ -56,8 +56,8 @@ jobs:
 
       - name: Prep Build
         run: |
-          make prep O=/home/runner/work/cFS-JSF-Rules/build
-        working-directory: /home/runner/work/cFS-JSF-Rules
+          make prep 
+        working-directory: /home/runner/work/cFS-JSF-Rules/cfe
           
   build-cfs:
     #Continue if check-for-duplicates found no duplicates. Always runs for pull-requests.
