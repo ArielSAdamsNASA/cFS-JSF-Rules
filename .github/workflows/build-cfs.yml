@@ -56,7 +56,7 @@ jobs:
 
       - name: Prep Build
         run: |
-          make prep O=/home/runner/work/cfs-jsf-rules/build
+          make prep O=/home/runner/work/cFS-JSF-Rules/build
         working-directory: /home/runner/work/cFS-JSF-Rules
           
   build-cfs:
@@ -80,7 +80,7 @@ jobs:
         uses: actions/cache@v2
         with:
           path: |
-            /home/runner/work/cfs-jsf-rules/*
+            /home/runner/work/cFS-JSF-Rules/*
           key: proto-build-${{ github.run_number }}
           
       - name: Make
