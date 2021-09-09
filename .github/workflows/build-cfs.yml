@@ -55,7 +55,6 @@ jobs:
   build-cfs:
     #Continue if check-for-duplicates found no duplicates. Always runs for pull-requests.
     needs: prep-env
-    if: ${{ needs.check-for-duplicates.outputs.should_skip != 'true' }}
     name: Build
     runs-on: ubuntu-18.04
 
@@ -76,13 +75,6 @@ jobs:
           path: |
             /home/runner/work/cfs-jsf-rules/*
           key: proto-build-${{ github.run_number }}
-
-      - name: Cache built binary
-        uses: actions/cache@v2
-        with:
-          key: bin-build-${{ github.run_number }}
-          path: |
-            /home/runner/work/cfs-jsf-rules/*
           
       - name: Make
         run: make
