@@ -44,13 +44,14 @@ jobs:
           submodules: true
       - name: Copy Makefile
         run: |
+          cd cFS-JSF-Rules
           ls
         working-directory: /home/runner/work/cFS-JSF-Rules   
         
       - name: Copy Makefile
         run: |
-          cp cfe/cmake/Makefile.sample Makefile
-          cp -r cfe/cmake/sample_defs sample_defs
+          cp cFS-JSF-Rules/cfe/cmake/Makefile.sample Makefile
+          cp -r cFS-JSF-Rules/cfe/cmake/sample_defs sample_defs
         working-directory: /home/runner/work/cFS-JSF-Rules
 
       - name: Prep Build
