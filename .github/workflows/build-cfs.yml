@@ -31,16 +31,6 @@ jobs:
     runs-on: ubuntu-18.04
 
     steps:
-      - name: Cache Source and proto-build
-        id: cache-src-proto-bld
-        uses: actions/cache@v2
-        with:
-          path: |
-            /home/runner/work/cFS-JSF-Rules/*
-            /home/runner/work/cFS-JSF-Rules/Makefile
-            /home/runner/work/cFS-JSF-Rules/build/*
-          key: proto-build-${{ github.run_number }}
-
       - name: Checkout cFS
         if: steps.cache-src-proto-bld.outputs.cache-hit != 'true'
         uses: actions/checkout@v2
@@ -54,6 +44,16 @@ jobs:
 
       - name: Prep Build
         run: make prep 
+        
+      - name: Cache Source and proto-build
+        id: cache-src-proto-bld
+        uses: actions/cache@v2
+        with:
+          path: |
+            /home/runner/work/cFS-JSF-Rules/*
+            /home/runner/work/cFS-JSF-Rules/Makefile
+            /home/runner/work/cFS-JSF-Rules/build/*
+          key: proto-build-${{ github.run_number }}  
           
   build-cfs:
     needs: prep-env
