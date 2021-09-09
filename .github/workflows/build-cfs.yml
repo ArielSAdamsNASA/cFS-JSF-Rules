@@ -102,7 +102,10 @@ jobs:
         with:
           path: /home/runner/work/cFS-JSF-Rules/cFS-JSF-Rules/*
           key: proto-build-${{ github.run_number }}
-                    
+              
+      - name: Prep test
+        run: make prep
+       
       # Setup the build system
       - name: Make
         run: make
