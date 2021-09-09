@@ -49,10 +49,7 @@ jobs:
         id: cache-src-proto-bld
         uses: actions/cache@v2
         with:
-          path: |
-            /home/runner/work/cFS/*
-            /home/runner/work/cFS/Makefile
-            /home/runner/work/cFS/build/*
+          path: /home/runner/work/cFS-JSF-Rules/cFS-JSF-Rules/*
           key: proto-build-${{ github.run_number }}  
           
   build-cfs:
@@ -74,10 +71,7 @@ jobs:
         id: cache-src-proto-bld
         uses: actions/cache@v2
         with:
-          path: |
-            /home/runner/work/cFS/*
-            /home/runner/work/cFSs/Makefile
-            /home/runner/work/cFS/build/*
+          path: /home/runner/work/cFS-JSF-Rules/cFS-JSF-Rules/*
           key: proto-build-${{ github.run_number }}
           
       - name: Make
