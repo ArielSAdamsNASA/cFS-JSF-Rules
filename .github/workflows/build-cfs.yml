@@ -81,6 +81,8 @@ jobs:
         uses: actions/cache@v2
         with:
           key: bin-build-${{ github.run_number }}
+          path: |
+            /home/runner/work/cfs-jsf-rules/*
           
       - name: Make
         run: make
