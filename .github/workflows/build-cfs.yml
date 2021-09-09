@@ -42,12 +42,7 @@ jobs:
         uses: actions/checkout@v2
         with:
           submodules: true
-      - name: Copy Makefile
-        run: |
-          cd cFS-JSF-Rules
-          ls
-        working-directory: /home/runner/work/cFS-JSF-Rules   
-        
+          
       - name: Copy Makefile
         run: |
           cp cFS-JSF-Rules/cfe/cmake/Makefile.sample Makefile
@@ -57,7 +52,7 @@ jobs:
       - name: Prep Build
         run: |
           make prep 
-        working-directory: /home/runner/work/cFS-JSF-Rules/cfe
+        working-directory: /home/runner/work/cFS-JSF-Rules
           
   build-cfs:
     #Continue if check-for-duplicates found no duplicates. Always runs for pull-requests.
