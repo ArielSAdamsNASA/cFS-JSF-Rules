@@ -25,6 +25,8 @@ jobs:
           do_not_skip: '["pull_request", "workflow_dispatch", "schedule"]'
           
   prep-env:
+    #Continue if check-for-duplicates found no duplicates. Always runs for pull-requests.
+    needs: check-for-duplicates
     name: Prepare Environment
     runs-on: ubuntu-18.04
 
@@ -34,7 +36,7 @@ jobs:
         uses: actions/cache@v2
         with:
           path: |
-            /home/runner/work/cfs-jsf-rules/*
+            /home/runner/work/cFS-JSF-Rules/*
           key: proto-build-${{ github.run_number }}
 
       - name: Checkout cFS
@@ -52,7 +54,6 @@ jobs:
         run: make prep 
           
   build-cfs:
-    #Continue if check-for-duplicates found no duplicates. Always runs for pull-requests.
     needs: prep-env
     name: Build
     runs-on: ubuntu-18.04
