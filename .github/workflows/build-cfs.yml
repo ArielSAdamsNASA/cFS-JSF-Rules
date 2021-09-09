@@ -98,8 +98,7 @@ jobs:
         id: cache-src-proto-bld
         uses: actions/cache@v2
         with:
-          path: |
-            /home/runner/work/cFS-JSF-Rules/*
+          path: /home/runner/work/cFS-JSF-Rules/cFS-JSF-Rules/*
           key: proto-build-${{ github.run_number }}
           
       - name: Install Dependencies
@@ -134,8 +133,7 @@ jobs:
         id: cache-src-proto-bld
         uses: actions/cache@v2
         with:
-          path: |
-            /home/runner/work/cFS-JSF-Rules/*
+          path: /home/runner/work/cFS-JSF-Rules/cFS-JSF-Rules/*
           key: proto-build-${{ github.run_number }}
 
       # Setup the build system
