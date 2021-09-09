@@ -51,7 +51,6 @@ jobs:
       - name: Prep Build
         run: |
           make prep
-        working-directory: /home/runner/work/cfs-jsf-rules
         
   build-cfs:
     #Continue if check-for-duplicates found no duplicates. Always runs for pull-requests.
@@ -85,7 +84,6 @@ jobs:
           
       - name: Make
         run: make
-        working-directory: /home/runner/work/osal/
 
   test-cfs:
     name: Test
