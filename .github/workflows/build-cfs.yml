@@ -42,20 +42,12 @@ jobs:
         uses: actions/checkout@v2
         with:
           submodules: true
-      - name: ls
-        run: ls
-      - name: ls
-        run: |
-          cd ../
-          ls
-      - name: ls
-        run: |
-          cd ../../
-          ls         
+    
       - name: Copy Makefile
         run: |
-          cp /cFS-JSF-Rules/cfe/cmake/Makefile.sample Makefile
-          cp -r /cFS-JSF-Rules/cfe/cmake/sample_defs sample_defs
+          ls
+          cp cfe/cmake/Makefile.sample Makefile
+          cp -r cfe/cmake/sample_defs sample_defs
         working-directory: /home/runner/work/cfs-jsf-rules
 
       - name: Prep Build
