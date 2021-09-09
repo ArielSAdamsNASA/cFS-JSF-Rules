@@ -103,7 +103,10 @@ jobs:
           
       - name: Install Dependencies
         run: sudo apt-get install lcov -y
-
+          
+      - name: Prep Tests
+        run: make prep
+        
       # Setup the build system
       - name: Make
         run: make
@@ -135,9 +138,6 @@ jobs:
         with:
           path: /home/runner/work/cFS-JSF-Rules/cFS-JSF-Rules/*
           key: proto-build-${{ github.run_number }}
-          
-      - name: Prep Tests
-        run: make prep
 
       # Setup the build system
       - name: Make Install
