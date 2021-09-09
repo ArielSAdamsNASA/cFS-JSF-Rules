@@ -29,7 +29,16 @@ jobs:
     runs-on: ubuntu-18.04
 
     steps:
+      - name: Cache Source and proto-build
+        id: cache-src-proto-bld
+        uses: actions/cache@v2
+        with:
+          path: |
+            /home/runner/work/cfs-jsf-rules/*
+          key: proto-build-${{ github.run_number }}
+
       - name: Checkout cFS
+        if: steps.cache-src-proto-bld.outputs.cache-hit != 'true'
         uses: actions/checkout@v2
         with:
           submodules: true
@@ -38,18 +47,12 @@ jobs:
         run: |
           cp cfe/cmake/Makefile.sample Makefile
           cp -r cfe/cmake/sample_defs sample_defs
+        working-directory: /home/runner/work/cfs-jsf-rules
 
       - name: Prep Build
         run: |
-          make prep
-
-      - name: Cache Source and proto-build
-        id: cache-src-proto-bld
-        uses: actions/cache@v2
-        with:
-          path: |
-            /home/runner/work/cfs-jsf-rules/*
-          key: proto-build-${{ github.run_number }}
+          make prep O=/home/runner/work/cfs-jsf-rules/build
+        working-directory: /home/runner/work/cfs-jsf-rules
           
   build-cfs:
     #Continue if check-for-duplicates found no duplicates. Always runs for pull-requests.
