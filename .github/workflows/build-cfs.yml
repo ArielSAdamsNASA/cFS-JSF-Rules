@@ -37,6 +37,8 @@ jobs:
         with:
           path: |
             /home/runner/work/cFS-JSF-Rules/*
+            /home/runner/work/cFS-JSF-Rules/Makefile
+            /home/runner/work/cFS-JSF-Rules/build/*
           key: proto-build-${{ github.run_number }}
 
       - name: Checkout cFS
@@ -74,6 +76,8 @@ jobs:
         with:
           path: |
             /home/runner/work/cFS-JSF-Rules/*
+            /home/runner/work/cFS-JSF-Rules/Makefile
+            /home/runner/work/cFS-JSF-Rules/build/*
           key: proto-build-${{ github.run_number }}
           
       - name: Make
