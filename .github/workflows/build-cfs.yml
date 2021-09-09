@@ -77,8 +77,13 @@ jobs:
           key: proto-build-${{ github.run_number }}
           
       - name: Make
+        run: ls
+      - name: Make
+        run: |
+          cd build
+          ls
+      - name: Make
         run: make
-
   test-cfs:
     name: Test
     runs-on: ubuntu-18.04
