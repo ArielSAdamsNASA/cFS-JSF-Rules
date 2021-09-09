@@ -46,14 +46,16 @@ jobs:
         run: ls
       - name: ls
         run: |
-          cd cfs
-          ls
           cd cfe
           ls
+      - name: ls
+        run: |
+          cd ../../
+          ls         
       - name: Copy Makefile
         run: |
-          cp cfe/cmake/Makefile.sample Makefile
-          cp -r cfe/cmake/sample_defs sample_defs
+          cp ./cfe/cmake/Makefile.sample Makefile
+          cp -r ./cfe/cmake/sample_defs sample_defs
         working-directory: /home/runner/work/cfs-jsf-rules
 
       - name: Prep Build
