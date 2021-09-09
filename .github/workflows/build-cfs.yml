@@ -82,7 +82,7 @@ jobs:
           
       - name: Make
         run: |
-          cd build
+          cd ../
           ls
           
       - name: Make
