@@ -45,14 +45,11 @@ jobs:
           
       - name: Copy Makefile
         run: |
-          cp cFS-JSF-Rules/cfe/cmake/Makefile.sample Makefile
-          cp -r cFS-JSF-Rules/cfe/cmake/sample_defs sample_defs
-        working-directory: /home/runner/work/cFS-JSF-Rules
+          cp ./cfe/cmake/Makefile.sample Makefile
+          cp -r ./cfe/cmake/sample_defs sample_defs
 
       - name: Prep Build
-        run: |
-          make prep 
-        working-directory: /home/runner/work/cFS-JSF-Rules
+        run: make prep 
           
   build-cfs:
     #Continue if check-for-duplicates found no duplicates. Always runs for pull-requests.
