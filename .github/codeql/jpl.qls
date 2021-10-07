@@ -1,0 +1,4 @@
+- queries: JPL_C
+  from: codeql/cpp-queries
+- queries: jsf/4.20 Unions and Bit Fields/AV Rule 153.ql
+  from: codeql/cpp-queries
