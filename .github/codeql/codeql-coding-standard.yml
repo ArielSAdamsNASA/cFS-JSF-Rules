@@ -3,5 +3,5 @@ name: "CodeQL Coding Standard Configuration File"
 disable-default-queries: true
 
 queries:
-  - name: jsf Rules
-    uses: github/codeql/cpp/ql/src/jsf/3.02 Code Size and Complexity/AV Rule 2.ql@main
+  - name: JPL Rule 3
+    uses: ./.github/codeql/jpl.qls
