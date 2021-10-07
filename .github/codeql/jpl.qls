@@ -1,0 +1,2 @@
+- queries: JPL_C
+  from: codeql/cpp-queries
