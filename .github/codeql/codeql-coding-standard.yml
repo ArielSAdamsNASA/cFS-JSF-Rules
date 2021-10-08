@@ -4,4 +4,4 @@ disable-default-queries: true
 
 queries:
   - name: JPL
-    uses: ./.github/codeql/jpl.qls
+    uses: ArielSAdamsNASA/cFS-JSF-Rules/.github/codeql/jpl.qls@TestQuerySuite
