@@ -109,7 +109,7 @@ jobs:
         uses: github/codeql-action/init@v1
         with:
           languages: c
-          config-file: ArielSAdamsNASA/cFS-JSF-Rules/.github/codeql/codeql-coding-standard.yml@TestQuerySuite
+          config-file: ./.github/codeql/codeql-coding-standard.yml@TestQuerySuite
 
       # Setup the build system
       - name: Copy sample_defs
