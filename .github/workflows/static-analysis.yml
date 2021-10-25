@@ -40,7 +40,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        cppcheck: bundle, ${{ github.event.inputs.module }}
+        bundle: [bundle]
+        strict: ${{github.event.inputs.module}}
 
     steps:      
       - name: Install cppcheck
@@ -53,7 +54,7 @@ jobs:
           submodules: true
 
       - name: Run bundle cppcheck
-        run: cppcheck --force --inline-suppr --quiet . 2> bundle_cppcheck_err.txt
+        run: cppcheck --force --inline-suppr --quiet . 2> ${{github.event.inputs.module}}_cppcheck_err.txt
 
         # Run strict static analysis for embedded portions of cfe, osal, and psp
       - name: Strict cppcheck
@@ -64,13 +65,13 @@ jobs:
       - name: Archive Static Analysis Artifacts
         uses: actions/upload-artifact@v2
         with:
-          name: ${{matrix.cppcheck}}-cppcheck-err
+          name: ${{github.event.inputs.module}}-cppcheck-err
           path: ./*cppcheck_err.txt
 
       - name: Check for errors
         run: |
-          if [[ -s ${{matrix.cppcheck}}_cppcheck_err.txt ]];
+          if [[ -s ${{github.event.inputs.module}}_cppcheck_err.txt ]];
           then
-            cat ${{matrix.cppcheck}}_cppcheck_err.txt
+            cat ${{github.event.inputs.module}}_cppcheck_err.txt
             exit -1
           fi
