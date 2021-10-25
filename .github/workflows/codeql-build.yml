@@ -1,6 +1,8 @@
 name: "CodeQL Analysis"
 
 on:
+  push:
+  pull-request:
   workflow_call:
     inputs:
       runs-on: 
