@@ -7,9 +7,9 @@ on:
   workflow_call:
     inputs:
       cppcheck:
-        description: Cppcheck module
+        description: 'Cppcheck module'
         type: string
-        default: bundle
+        default: 'bundle'
 
 jobs:
   #Checks for duplicate actions. Skips push actions if there is a matching or duplicate pull-request action. 
@@ -50,10 +50,10 @@ jobs:
         run: cppcheck --force --inline-suppr --quiet . 2> bundle_cppcheck_err.txt
 
         # Run strict static analysis for embedded portions of cfe, osal, and psp
-      - name: strict cppcheck
+      - name: Strict cppcheck
         if: ${{  inputs.cppcheck !='bundle' }}
         run: |
-          ${{  inputs.cppcheck }}
+          ${{ inputs.cppcheck }}
 
       - name: Archive Static Analysis Artifacts
         uses: actions/upload-artifact@v2
