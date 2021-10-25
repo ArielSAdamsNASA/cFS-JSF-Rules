@@ -40,7 +40,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        cppcheck: bundle, ${{ events.github.inputs.module }}
+        cppcheck: bundle, ${{ github.event.inputs.module }}
 
     steps:      
       - name: Install cppcheck
