@@ -5,16 +5,11 @@ on:
   push:
   pull_request:
   workflow_call:
-    inputs:
-      runs-on: 
-        description: Platform to execute on
-        type: string
-        default: ubuntu-latest
 
 jobs:
   #Checks for duplicate actions. Skips push actions if there is a matching or duplicate pull-request action. 
   check-for-duplicates:
-    runs-on: ${{ inputs.runs-on }}
+    runs-on: ubuntu-latest
     # Map a step output to a job output
     outputs:
       should_skip: ${{ steps.skip_check.outputs.should_skip }}
@@ -31,7 +26,7 @@ jobs:
     needs: check-for-duplicates
     if: ${{ needs.check-for-duplicates.outputs.should_skip != 'true' }}
     name: Run format check
-    runs-on: ${{ inputs.runs-on }}
+    runs-on: ubuntu-latest
     timeout-minutes: 15
 
     steps:
