@@ -42,7 +42,7 @@ jobs:
 
     steps:      
       - name: echo 
-        run: echo ${{ inputs.module }}
+        run: echo ${{ github.event.inputs.module }}
         
       - name: Install cppcheck
         run: sudo apt-get install cppcheck -y
