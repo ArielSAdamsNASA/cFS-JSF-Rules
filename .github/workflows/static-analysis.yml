@@ -41,6 +41,9 @@ jobs:
       fail-fast: false
 
     steps:      
+      - name: echo 
+        run: echo ${{ inputs.module }}
+        
       - name: Install cppcheck
         run: sudo apt-get install cppcheck -y
 
