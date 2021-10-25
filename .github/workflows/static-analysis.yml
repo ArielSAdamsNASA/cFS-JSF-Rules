@@ -51,20 +51,20 @@ jobs:
 
         # Run strict static analysis for embedded portions of cfe, osal, and psp
       - name: Strict cppcheck
-        if: ${{  inputs.cppcheck !='bundle' }}
+        if: ${{ github.event.inputs.cppcheck !='bundle' }}
         run: |
-          ${{ inputs.cppcheck }}
+          ${{ github.event.inputs.cppcheck }}
 
       - name: Archive Static Analysis Artifacts
         uses: actions/upload-artifact@v2
         with:
-          name: ${{ inputs.cppcheck }}-cppcheck-err
+          name: ${{ github.event.inputs.cppcheck }}-cppcheck-err
           path: ./*cppcheck_err.txt
 
       - name: Check for errors
         run: |
-          if [[ -s ${{ inputs.cppcheck }}_cppcheck_err.txt ]];
+          if [[ -s ${{ github.event.inputs.cppcheck }}_cppcheck_err.txt ]];
           then
-            cat ${{ inputs.cppcheck }}_cppcheck_err.txt
+            cat ${{ github.event.inputs.cppcheck }}_cppcheck_err.txt
             exit -1
           fi
