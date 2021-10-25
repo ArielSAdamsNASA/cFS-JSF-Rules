@@ -1,6 +1,7 @@
 name: "Test Inputs"
 
 on:
+  push:
   workflow_call:
     inputs:
       username:
