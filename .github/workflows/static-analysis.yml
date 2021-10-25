@@ -6,10 +6,14 @@ on:
   pull_request:
   workflow_call:
     inputs:
-      cppcheck:
-        description: 'Cppcheck module'
+      module:
+        description: 'GitHub Module'
         type: string
         default: 'bundle'
+      cppcheck-code:
+        description: 'Cppcheck Code'
+        type: string
+        default: ''
 
 jobs:
   #Checks for duplicate actions. Skips push actions if there is a matching or duplicate pull-request action. 
@@ -35,6 +39,8 @@ jobs:
 
     strategy:
       fail-fast: false
+      matrix:
+        cppcheck: [bundle, strict]
 
     steps:      
       - name: Install cppcheck
@@ -51,20 +57,20 @@ jobs:
 
         # Run strict static analysis for embedded portions of cfe, osal, and psp
       - name: Strict cppcheck
-        if: ${{ github.event.inputs.cppcheck !='bundle' }}
+        if: ${{ github.event.inputs.module !='bundle' }}
         run: |
-          ${{ github.event.inputs.cppcheck }}
+          ${{ github.event.inputs.cppcheck-code }}
 
       - name: Archive Static Analysis Artifacts
         uses: actions/upload-artifact@v2
         with:
-          name: ${{ github.event.inputs.cppcheck }}-cppcheck-err
+          name: ${{matrix.cppcheck}}-cppcheck-err
           path: ./*cppcheck_err.txt
 
       - name: Check for errors
         run: |
-          if [[ -s ${{ github.event.inputs.cppcheck }}_cppcheck_err.txt ]];
+          if [[ -s ${{matrix.cppcheck}}_cppcheck_err.txt ]];
           then
-            cat ${{ github.event.inputs.cppcheck }}_cppcheck_err.txt
+            cat ${{matrix.cppcheck}}_cppcheck_err.txt
             exit -1
           fi
