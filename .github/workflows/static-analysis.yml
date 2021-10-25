@@ -42,7 +42,7 @@ jobs:
 
     steps:      
       - name: echo 
-        run: echo ${{ INPUT_MODULE }}
+        run: echo ${INPUT_MODULE}
         
       - name: Install cppcheck
         run: sudo apt-get install cppcheck -y
