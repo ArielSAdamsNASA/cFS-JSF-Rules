@@ -50,21 +50,21 @@ jobs:
         run: cppcheck --force --inline-suppr --quiet . 2> bundle_cppcheck_err.txt
 
         # Run strict static analysis for embedded portions of cfe, osal, and psp
-      - name: cfe strict cppcheck
-        if: ${{inputs.cppcheck !='bundle'}}
+      - name: strict cppcheck
+        if: ${{  inputs.cppcheck !='bundle' }}
         run: |
-          ${{inputs.cppcheck}}
+          ${{  inputs.cppcheck }}
 
       - name: Archive Static Analysis Artifacts
         uses: actions/upload-artifact@v2
         with:
-          name: ${{inputs.cppcheck}}-cppcheck-err
+          name: ${{ inputs.cppcheck }}-cppcheck-err
           path: ./*cppcheck_err.txt
 
       - name: Check for errors
         run: |
-          if [[ -s ${{inputs.cppcheck}}_cppcheck_err.txt ]];
+          if [[ -s ${{ inputs.cppcheck }}_cppcheck_err.txt ]];
           then
-            cat ${{inputs.cppcheck}}_cppcheck_err.txt
+            cat ${{ inputs.cppcheck }}_cppcheck_err.txt
             exit -1
           fi
