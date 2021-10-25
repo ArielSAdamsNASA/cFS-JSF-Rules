@@ -41,7 +41,7 @@ jobs:
       fail-fast: false
       matrix:
         bundle: [bundle]
-        strict: ${{github.event.inputs.module}}
+        strict: ${{ github.event.inputs.module }}
 
     steps:      
       - name: Install cppcheck
@@ -65,13 +65,13 @@ jobs:
       - name: Archive Static Analysis Artifacts
         uses: actions/upload-artifact@v2
         with:
-          name: ${{github.event.inputs.module}}-cppcheck-err
+          name: ${{ github.event.inputs.module }}-cppcheck-err
           path: ./*cppcheck_err.txt
 
       - name: Check for errors
         run: |
-          if [[ -s ${{github.event.inputs.module}}_cppcheck_err.txt ]];
+          if [[ -s ${{ github.event.inputs.module }}_cppcheck_err.txt ]];
           then
-            cat ${{github.event.inputs.module}}_cppcheck_err.txt
+            cat ${{ github.event.inputs.module }}_cppcheck_err.txt
             exit -1
           fi
