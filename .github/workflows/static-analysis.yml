@@ -6,8 +6,8 @@ on:
   pull_request:
   workflow_call:
     inputs:
-      runs-on:
-        description: Stricy cpp-check
+      cppcheck:
+        description: Cppcheck module
         type: string
         default: bundle
 
@@ -51,14 +51,14 @@ jobs:
 
         # Run strict static analysis for embedded portions of cfe, osal, and psp
       - name: cfe strict cppcheck
-        if: ${{inputs.strict-cppcheck !='bundle'}}
+        if: ${{inputs.cppcheck !='bundle'}}
         run: |
-          ${{inputs.strict-cppcheck}}
+          ${{inputs.cppcheck}}
 
       - name: Archive Static Analysis Artifacts
         uses: actions/upload-artifact@v2
         with:
-          name: ${{matrix.cppcheck}}-cppcheck-err
+          name: ${{inputs.cppcheck}}-cppcheck-err
           path: ./*cppcheck_err.txt
 
       - name: Check for errors
