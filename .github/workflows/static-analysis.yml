@@ -39,9 +39,6 @@ jobs:
 
     strategy:
       fail-fast: false
-      matrix:
-        bundle: [bundle]
-        strict: ${{ github.event.inputs.module }}
 
     steps:      
       - name: Install cppcheck
@@ -54,7 +51,7 @@ jobs:
           submodules: true
 
       - name: Run bundle cppcheck
-        run: cppcheck --force --inline-suppr --quiet . 2> ${{github.event.inputs.module}}_cppcheck_err.txt
+        run: cppcheck --force --inline-suppr --quiet . 2> ${{ github.event.inputs.module }}_cppcheck_err.txt
 
         # Run strict static analysis for embedded portions of cfe, osal, and psp
       - name: Strict cppcheck
