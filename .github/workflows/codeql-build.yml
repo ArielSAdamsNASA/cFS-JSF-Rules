@@ -2,7 +2,12 @@ name: "CodeQL Analysis"
 
 on:
   workflow_call:
-  push:
+    inputs:
+      runs-on: 
+        description: Platform to execute on
+        type: string
+        default: ubuntu-latest
+      
 
 env:
   SIMULATION: native
