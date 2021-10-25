@@ -35,7 +35,7 @@ jobs:
         run: |
           wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key | sudo apt-key add -
           sudo add-apt-repository 'deb http://apt.llvm.org/bionic/   llvm-toolchain-bionic-10 main'
-          sudo apt-get update && sudo apt-get install clang-format-10
+          sudo apt-get update && sudo apt-get install libllvm10 && sudo apt-get install clang-format-10
 
       - name: Checkout bundle
         uses: actions/checkout@v2
