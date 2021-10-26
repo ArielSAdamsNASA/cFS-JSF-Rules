@@ -4,7 +4,7 @@ on:
   push:
   workflow_call:
     inputs:
-      asdfg:
+      username:
         description: 'A username passed from the caller workflow'
         default: 'john-doe'
         required: false
