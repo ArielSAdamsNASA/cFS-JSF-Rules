@@ -4,7 +4,7 @@ on:
   push:
   workflow_call:
     inputs:
-      username:
+      asdfg:
         description: 'A username passed from the caller workflow'
         default: 'john-doe'
         required: false
@@ -16,4 +16,4 @@ jobs:
 
     steps:
       - name: Print the input name to STDOUT
-        run: echo The username is ${{ on.workflow_call.inputs.username }}
+        run: echo The username is ${{ inputs.asdfg }}
