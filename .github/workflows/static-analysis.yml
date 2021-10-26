@@ -77,12 +77,14 @@ jobs:
           ${{ inputs.cppcheck-code }}
 
       - name: Archive static analysis artifacts
+        if: ${{ inputs.module !='bundle' }}
         uses: actions/upload-artifact@v2
         with:
           name: ${{ inputs.module }}-cppcheck-err
           path: ./*cppcheck_err.txt
 
       - name: Check for errors
+        if: ${{ inputs.module !='bundle' }}
         run: |
           if [[ -s ${{ inputs.module }}_cppcheck_err.txt ]];
           then
