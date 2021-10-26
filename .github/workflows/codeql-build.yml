@@ -1,14 +1,15 @@
 name: "CodeQL Analysis"
 
+# Run on all push and pull requests
 on:
   push:
   pull_request:
   workflow_call:
     inputs:
-      runs-on: 
-        description: Platform to execute on
+      make:
+        description: 'Make Code'
         type: string
-        default: ubuntu-latest
+        default: 'make'
       
 
 env:
@@ -42,20 +43,17 @@ jobs:
     steps:
       # Checks out a copy of your repository
       - name: Checkout code
-        if: ${{ !steps.skip-workflow.outputs.skip }}
         uses: actions/checkout@v2
         with:
           repository: nasa/cFS
           submodules: true
 
       - name: Check versions
-        if: ${{ !steps.skip-workflow.outputs.skip }}
         run: |
            git log -1 --pretty=oneline
            git submodule
 
       - name: Checkout codeql code      
-        if: ${{ !steps.skip-workflow.outputs.skip }}
         uses: actions/checkout@v2
         with:
           repository: github/codeql 
@@ -63,7 +61,6 @@ jobs:
           path: codeql
 
       - name: Initialize CodeQL
-        if: ${{ !steps.skip-workflow.outputs.skip }}
         uses: github/codeql-action/init@v1
         with:
           languages: c
@@ -71,17 +68,14 @@ jobs:
 
       # Setup the build system
       - name: Copy sample_defs
-        if: ${{ !steps.skip-workflow.outputs.skip }}
         run: |
           cp ./cfe/cmake/Makefile.sample Makefile
           cp -r ./cfe/cmake/sample_defs sample_defs
 
       # Setup the build system
       - name: Make Install
-        if: ${{ !steps.skip-workflow.outputs.skip }}
-        run: make
+        run: ${{ github.event.inputs.make }}
 
       # Run CodeQL
       - name: Perform CodeQL Analysis
-        if: ${{ !steps.skip-workflow.outputs.skip }}
         uses: github/codeql-action/analyze@v1
