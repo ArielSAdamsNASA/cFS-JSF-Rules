@@ -9,5 +9,3 @@ jobs:
   codeql:
     name: Codeql
     uses: ArielSAdamsNASA/cFS-JSF-Rules/.github/workflows/codeql-build.yml@Rule1
-    with: 
-      make: 'make'
