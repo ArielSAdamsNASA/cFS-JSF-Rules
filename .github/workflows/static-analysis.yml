@@ -36,7 +36,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        cppcheck: [bundle, strict]
+        cppcheck: [non-strict, strict]
 
 
     steps:      
