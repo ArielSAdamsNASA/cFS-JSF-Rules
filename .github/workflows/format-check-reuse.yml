@@ -1,4 +1,4 @@
-name: Format Check
+name: Format Check Reuse
 
 # Run on all push and pull requests
 on:
