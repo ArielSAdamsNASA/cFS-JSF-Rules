@@ -6,11 +6,7 @@ on:
   pull_request:
   workflow_call:
     inputs:
-      module:
-        description: 'GitHub Module'
-        type: string
-        default: 'bundle'
-      cppcheck-code:
+      strict-dir-list:
         description: 'Cppcheck Code'
         type: string
         default: ''
@@ -39,6 +35,9 @@ jobs:
 
     strategy:
       fail-fast: false
+      matrix:
+        cppcheck: [bundle, strict]
+
 
     steps:      
       - name: Install cppcheck
@@ -51,40 +50,23 @@ jobs:
           submodules: true
 
       - name: Run bundle cppcheck
-        run: cppcheck --force --inline-suppr --quiet . 2> ${{ inputs.module }}_cppcheck_err.txt
-        
-      - name: Archive static analysis artifacts for bundle
-        uses: actions/upload-artifact@v2
-        with:
-          name: bundle-cppcheck-err
-          path: ./*cppcheck_err.txt
-
-      - name: Check for errors for bundle
-        run: |
-          if [[ -s bundle_cppcheck_err.txt ]];
-          then
-            cat $bundle_cppcheck_err.txt
-            exit -1
-          fi
+        run: cppcheck --force --inline-suppr --quiet . 2> ${{matrix.cppcheck}}_cppcheck_err.txt
           
         # Run strict static analysis for embedded portions of cfe, osal, and psp
       - name: Strict cppcheck
-        if: ${{ inputs.module !='bundle' }}
-        run: |
-          ${{ inputs.cppcheck-code }}
+        if: ${{ strict-dir-list !='' }}
+        run: cppcheck --force --inline-suppr --std=c99 --language=c --enable=warning,performance,portability,style --suppress=variableScope --inconclusive .${{ inputs.strict-dir-list }} 2> ../${{matrix.cppcheck}}_cppcheck_err.txt
 
-      - name: Archive static analysis artifacts
-        if: ${{ inputs.module !='bundle' }}
+      - name: Archive Static Analysis Artifacts
         uses: actions/upload-artifact@v2
         with:
-          name: ${{ inputs.module }}-cppcheck-err
+          name: ${{matrix.cppcheck}}-cppcheck-err
           path: ./*cppcheck_err.txt
 
       - name: Check for errors
-        if: ${{ inputs.module !='bundle' }}
         run: |
-          if [[ -s ${{ inputs.module }}_cppcheck_err.txt ]];
+          if [[ -s ${{matrix.cppcheck}}_cppcheck_err.txt ]];
           then
-            cat ${{ inputs.module }}_cppcheck_err.txt
+            cat ${{matrix.cppcheck}}_cppcheck_err.txt
             exit -1
           fi
