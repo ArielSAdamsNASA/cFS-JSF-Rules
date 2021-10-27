@@ -59,13 +59,13 @@ jobs:
 
       - name: Archive Static Analysis Artifacts
         uses: actions/upload-artifact@v2
-        if: ${{ inputs.strict-dir-list !='' }} || ${{matrix.cppcheck == 'non-strict'}}
+        if: ${{ inputs.strict-dir-list =='' }} && ${{matrix.cppcheck == 'non-strict'}}
         with:
           name: ${{matrix.cppcheck}}-cppcheck-err
           path: ./*cppcheck_err.txt
 
       - name: Check for errors
-        if: ${{ inputs.strict-dir-list !='' }} || ${{matrix.cppcheck == 'non-strict'}}
+        if: ${{ inputs.strict-dir-list =='' }} && ${{matrix.cppcheck == 'non-strict'}}
         run: |
           if [[ -s ${{matrix.cppcheck}}_cppcheck_err.txt ]];
           then
