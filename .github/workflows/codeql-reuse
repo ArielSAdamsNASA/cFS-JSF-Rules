@@ -1,4 +1,4 @@
-name: Reuse CodeQl 
+name: Reuse CodeQl Build
 
 on:
   push:
