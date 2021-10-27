@@ -1,15 +1,16 @@
 name: "CodeQL Analysis"
 
-# Run on all push and pull requests
 on:
-  push:
-  pull_request:
   workflow_call:
     inputs:
-      make:
-        description: 'Make Code'
+      make-prep:
+        description: 'Make Prep'
         type: string
-        default: 'make'
+        default: ''
+      make:
+        description: 'Make Copy'
+        type: string
+        default: 'make'      
       
 
 env:
@@ -72,9 +73,12 @@ jobs:
           cp ./cfe/cmake/Makefile.sample Makefile
           cp -r ./cfe/cmake/sample_defs sample_defs
 
+      - name: Make prep
+        run: ${{ inputs.make-prep }}
+      
       # Setup the build system
       - name: Make Install
-        run: ${{ github.event.inputs.make }}
+        run: ${{ inputs.make }}
 
       # Run CodeQL
       - name: Perform CodeQL Analysis
