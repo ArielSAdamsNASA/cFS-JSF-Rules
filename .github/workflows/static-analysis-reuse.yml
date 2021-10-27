@@ -6,4 +6,4 @@ on:
 jobs:
   static-analysis:
     name: Static Analysis
-    uses: ArielSAdamsNASA/osal/.github/workflows/reuse-static.yml@Test
+    uses: ArielSAdamsNASA/cFS-JSF-Rules/.github/workflows/static-analysis.yml@Rule1
