@@ -29,7 +29,7 @@ jobs:
     if: ${{ needs.check-for-duplicates.outputs.should_skip != 'true' }}
     name: Build
     runs-on: ubuntu-18.04
-    container: core-flight-system/qemu_rtems:5
+    container: core-flight-system/qemu-rtems-5
 
     strategy:
       fail-fast: false
@@ -64,7 +64,7 @@ jobs:
   test-cfs:
     name: Test
     runs-on: ubuntu-18.04
-    container: core-flight-system/qemu_rtems:5
+    container: core-flight-system/qemu-rtems-5
 
     needs: build-cfs
 
