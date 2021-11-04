@@ -29,7 +29,7 @@ jobs:
     if: ${{ needs.check-for-duplicates.outputs.should_skip != 'true' }}
     name: Build
     runs-on: ubuntu-18.04
-    container: core-flight-system/qemu-rtems-5
+    container: core-flight-system/qemu-rtems-5:main-859f39f
 
     strategy:
       fail-fast: false
