@@ -64,7 +64,7 @@ jobs:
   test-cfs:
     name: Test
     runs-on: ubuntu-18.04
-    container: core-flight-system/qemu-rtems-5
+    container: ghcr.io/core-flight-system/qemu-rtems-5:main-859f39f
 
     needs: build-cfs
 
