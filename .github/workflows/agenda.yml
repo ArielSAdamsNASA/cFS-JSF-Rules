@@ -10,18 +10,17 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      
-      - name: Run Changelog
-        uses: heinrichreimer/github-changelog-generator-action@v2.1.1
+
+      - name: listPullRequests
+        uses: buildsville/list-pull-requests@v1
+        id: list
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          maxIssues: 0 
-          pullRequests: true
-          author: true
+          token: ${{secrets.GITHUB_TOKEN}}
+          labels: '["enhancement"]'
+          
+      - name: output
+        run: echo '${{ steps.list.outputs.pulls }}'
         
       - name: Upload Agenda
-        uses: actions/upload-artifact@v1.0.0
-        with:
-          name: "CCB Agenda"
-          path: CHANGELOG.md
+        run: ls
  
