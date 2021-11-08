@@ -1,6 +1,7 @@
 name: CCB Agenda
 
 on: 
+  push:
   workflow_dispatch:
  
 jobs:
