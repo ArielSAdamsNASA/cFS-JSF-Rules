@@ -1,0 +1,27 @@
+name: CCB Agenda
+
+on: 
+  workflow_dispatch:
+ 
+ jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      
+      - name: Run Changelog
+        uses: heinrichreimer/github-changelog-generator-action@v2.1.1
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          maxIssues: 0 
+          pullRequests: true
+          author: true
+        
+      - name: Upload Agenda
+        uses: actions/upload-artifact@v1.0.0
+        with:
+          name: "CCB Agenda"
+          path: Community-CCB-Agenda.md
+          
+ 
