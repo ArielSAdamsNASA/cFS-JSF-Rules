@@ -23,6 +23,5 @@ jobs:
         uses: actions/upload-artifact@v1.0.0
         with:
           name: "CCB Agenda"
-          path: Community-CCB-Agenda.md
           
  
