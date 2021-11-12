@@ -21,6 +21,4 @@ jobs:
       - name: output
         run: echo '${{ steps.list.outputs.pulls }}'
         
-      - name: Upload Agenda
-        run: ls
  
