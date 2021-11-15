@@ -1,0 +1,24 @@
+name: CCB Agenda
+
+on: 
+  push:
+  workflow_dispatch:
+ 
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: listPullRequests
+        uses: ArielSAdamsNASA/list-pull-requests-1@master
+        id: list
+        with:
+          token: ${{secrets.GITHUB_TOKEN}}
+          labels: '["enhancement"]'
+          
+      - name: output
+        run: echo '${{ steps.list.outputs.pulls }}'
+        
+ 
