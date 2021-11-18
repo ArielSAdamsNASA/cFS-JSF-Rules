@@ -56,7 +56,7 @@ jobs:
           cp -r ./cfe/cmake/sample_defs sample_defs
       # Setup the build system
       - name: Make Prep
-        run: make SIMULATION=i386-rtems4-11 prep
+        run: make SIMULATION=i386-rtems-4-11 prep
 
       - name: Make
         run: make
