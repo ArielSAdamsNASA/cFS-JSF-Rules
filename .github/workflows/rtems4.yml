@@ -100,7 +100,7 @@ jobs:
       # Setup the build system
       - name: Make
         run: | 
-          make SIMULATION=i686-rtems-4.11 prep
+          make SIMULATION=i686-rtems4.11 prep
           make install
 
       - name: Test
