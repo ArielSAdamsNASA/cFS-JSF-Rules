@@ -29,7 +29,7 @@ jobs:
     if: ${{ needs.check-for-duplicates.outputs.should_skip != 'true' }}
     name: Build
     runs-on: ubuntu-18.04
-    container: ghcr.io/core-flight-system/qemu-rtems-5:main-859f39f
+    container: ghcr.io/arielsadamsnasa/qemu-rtems-5:test-without-debian-3ebcf08
 
     strategy:
       fail-fast: false
@@ -64,7 +64,7 @@ jobs:
   test-cfs:
     name: Test
     runs-on: ubuntu-18.04
-    container: ghcr.io/core-flight-system/qemu-rtems-5:main-859f39f
+    container: ghcr.io/arielsadamsnasa/qemu-rtems-5:test-without-debian-3ebcf08
 
     needs: build-cfs
 
