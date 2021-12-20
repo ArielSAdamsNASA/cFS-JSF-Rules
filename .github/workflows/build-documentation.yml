@@ -168,7 +168,6 @@ jobs:
       - name: Generate PDF
         run: |
           set -x
-          cd deploy
           cd ./build/docs/users_guide/latex
           make > build.txt
           mv refman.pdf $GITHUB_WORKSPACE/deploy/cFE_Users_Guide.pdf
