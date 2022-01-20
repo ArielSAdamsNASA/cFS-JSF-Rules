@@ -2,8 +2,6 @@ name: Static Analysis
 
 # Run on all push and pull requests
 on:
-  push:
-  pull_request:
   workflow_call:
     inputs:
       strict-dir-list:
@@ -24,7 +22,7 @@ jobs:
         with:
           concurrent_skipping: 'same_content'
           skip_after_successful_duplicate: 'true'
-          do_not_skip: '["pull_request", "workflow_dispatch", "schedule"]'
+          do_not_skip: '["pull_request", "workflow_dispatch", "schedule", "workflow_call"]'
 
   static-analysis:
     #Continue if check-for-duplicates found no duplicates. Always runs for pull-requests.
