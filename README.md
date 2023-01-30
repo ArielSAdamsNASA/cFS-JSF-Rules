@@ -2,6 +2,7 @@
 [![LGTM Alerts](https://img.shields.io/lgtm/alerts/github/nasa/cFS)](https://lgtm.com/projects/g/nasa/cFS/alerts/?mode=list)
 [![LGTM Grade](https://img.shields.io/lgtm/grade/python/github/nasa/cFS)](https://lgtm.com/projects/g/nasa/cFS/alerts/?mode=list)
 [![LGTM Grade](https://img.shields.io/lgtm/grade/cpp/github/nasa/cFS)](https://lgtm.com/projects/g/nasa/cFS/alerts/?mode=list)
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FArielSAdamsNASA%2FcFS-JSF-Rules.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2FArielSAdamsNASA%2FcFS-JSF-Rules?ref=badge_shield)
 
 # Core Flight System - BUNDLE
 
@@ -34,6 +35,9 @@ See [releases](https://github.com/nasa/cFS/releases) for release history and ass
   - [Test results](https://github.com/nasa/cFE/tree/v6.6.0a/test-and-ground/test-review-packages/Results)
 
 Other elements listed below are released under a variety of licenses as detailed in their respective repositories.
+
+
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FArielSAdamsNASA%2FcFS-JSF-Rules.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2FArielSAdamsNASA%2FcFS-JSF-Rules?ref=badge_large)
 
 ## Known issues
 
@@ -180,4 +184,3 @@ The following list is user submitted, and not CCB controlled.  They are released
     - TBD
   - Other PSPs
     - TBD
-
